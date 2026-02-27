@@ -1,0 +1,10 @@
+Flask==3.0.0
+torch==2.1.2
+torchvision==0.16.2
+numpy==1.26.4
+opencv-python==4.9.0.80
+Pillow==10.2.0
+scikit-learn==1.4.0
+pytorch-grad-cam==1.4.8
+gunicorn==21.2.0
+

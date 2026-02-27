@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Explainable Hematology AI System</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            background-color: #1f4e79;
+            color: white;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .upload-box {
+            margin-bottom: 30px;
+        }
+
+        input[type="file"] {
+            padding: 8px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #1f4e79;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #163a5c;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            width: 70%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        img {
+            width: 300px;
+            margin: 10px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+        }
+
+        .confidence {
+            font-weight: bold;
+            color: #1f4e79;
+        }
+
+        .features {
+            text-align: left;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        .images-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 10px;
+            background-color: #1f4e79;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Explainable Hematology AI System</h1>
+
+<div class="container">
+
+    <div class="upload-box">
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" required>
+            <button type="submit">Analyze Image</button>
+        </form>
+    </div>
+
+    {% if prediction %}
+
+    <div class="card">
+        <h2>Disease Prediction</h2>
+        <p><strong>{{ prediction }}</strong></p>
+        <p class="confidence">Confidence: {{ confidence }}%</p>
+    </div>
+
+    {% if leukemia_stage %}
+    <div class="card">
+        <h2>Leukemia Subtype</h2>
+        <p><strong>{{ leukemia_stage }}</strong></p>
+        <p class="confidence">Confidence: {{ leukemia_confidence }}%</p>
+    </div>
+    {% endif %}
+
+    <div class="card">
+        <h2>Grad-CAM Visualization</h2>
+        <div class="images-container">
+            <div>
+                <p><strong>Uploaded Image</strong></p>
+                <img src="data:image/jpeg;base64,{{ uploaded_image }}">
+            </div>
+            <div>
+                <p><strong>Model Attention (Grad-CAM)</strong></p>
+                <img src="data:image/jpeg;base64,{{ gradcam_image }}">
+            </div>
+        </div>
+    </div>
+
+   {% if disease_details %}
+    <h3>Common Characteristics:</h3>
+        <b>RBC:</b> {{ disease_details.RBC }}<br>
+        <b>WBC:</b> {{ disease_details.WBC }}<br>
+        <b>Platelets:</b> {{ disease_details.Platelets }}<br>
+        <b>Summary:</b> {{ disease_details.Summary }}<br>
+    
+
+    <h3>Common Remedies:</h3>
+    <p>{{ disease_details.Remedies }}</p>
+    {% endif %}
+    
+    {% endif %}
+
+</div>
+
+<footer>
+    ⚠ This system is intended for research and educational purposes only.  
+    It is not a substitute for professional medical diagnosis.
+</footer>
+
+</body>
+</html>
